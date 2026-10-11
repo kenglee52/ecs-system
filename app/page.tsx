@@ -2,14 +2,19 @@
 
 import { useState } from "react";
 import { AuthLogin } from "@/authentication/auth";
+import { useRouter } from "next/navigation";
 export default function Login() {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
 
   const handleLogin = async(e: React.FormEvent) => {
     e.preventDefault();
-    await AuthLogin(phone, password);
+    const result = await AuthLogin(phone, password);
+    if(result.role === "ADMIN"){
+      router.replace("/admin/dashboard");
+    }
   };
 
   return (
