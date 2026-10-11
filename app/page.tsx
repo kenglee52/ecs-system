@@ -76,9 +76,6 @@ export default function Login() {
                 <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider">
                   ລະຫັດຜ່ານ
                 </label>
-                <a href="#forgot" className="text-xs text-yellow-600 hover:underline font-medium">
-                  ລືມລະຫັດຜ່ານ?
-                </a>
               </div>
               <div className="relative">
                 <input
