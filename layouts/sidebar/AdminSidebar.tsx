@@ -1,5 +1,5 @@
 "use client";
-import { LayoutDashboard, Receipt, Users, Settings, LogOut, X, FolderEdit } from "lucide-react";
+import { LayoutDashboard, UserCheck, CreditCard, UserCog, BarChart3, LogOut, X } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -11,12 +11,13 @@ interface SidebarProps {
 export default function AdminSidebar({ isOpen, onClose }: SidebarProps) {
   const router = useRouter();
   const pathname = usePathname();
+  
   const menuItems = [
     { title: "ໜ້າຫຼັກ (Dashboard)", icon: LayoutDashboard, path: "/admin/dashboard" },
-    { title: "ອະນຸມັດເປີດຮ້ານ", icon: Receipt, path: "/admin/approve" },
-    { title: "ຕິດຕາມການຈ່າຍຄ່າບໍລິການ", icon: Users, path: "/admin/fee-payment" },
-    { title: "ຈັດການຜູ້ດູແລລະບົບ", icon: FolderEdit, path: "/admin/manage-admin" },
-    { title: "ລາຍງານລາຍຮັບ", icon: Settings, path: "/admin/income-report" },
+    { title: "ອະນຸມັດເປີດຮ້ານ", icon: UserCheck, path: "/admin/approve" },
+    { title: "ຕິດຕາມການຈ່າຍຄ່າບໍລິການ", icon: CreditCard, path: "/admin/fee-payment" },
+    { title: "ຈັດການຜູ້ດູແລລະບົບ", icon: UserCog, path: "/admin/manage-admin" },
+    { title: "ລາຍງານລາຍຮັບ", icon: BarChart3, path: "/admin/income-report" },
   ];
 
   return (

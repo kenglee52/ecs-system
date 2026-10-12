@@ -20,7 +20,7 @@ export default function DataTable({ headers, data, renderRow, itemsPerPage = 7 }
       <div className="overflow-x-auto flex-1">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-200 text-slate-600 text-[11px] uppercase tracking-wider">
+            <tr className="bg-sky-800 border-b border-slate-200 text-white text-[11px] uppercase tracking-wider">
               {headers.map((header, index) => (
                 <th 
                   key={index} 

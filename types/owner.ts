@@ -1,0 +1,34 @@
+export interface Owner {
+  _id: string;
+  laoName: string;
+  laoLastname?: string;
+  engName: string;
+  engLastname?: string;
+  gender: string;
+  birth: string;
+  tel: string;
+  email: string;
+  password: string;
+  bornProvince: string;
+  bornDistrict: string;
+  bornVillage: string;
+  presentProvince: string;
+  presentDistrict: string;
+  presentVillage: string;
+  documentType: string;
+  documentId: string;
+  issueDate: string;
+  expiryDate: string;
+  documentImage: string[];
+  brandType: string;
+  brandName: string;
+  registrationNumber: string;
+  registrationDate: string;
+  registrationImage: string;
+  logo: string;
+  signature: string;
+  role: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
