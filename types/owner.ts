@@ -31,4 +31,5 @@ export interface Owner {
   isActive: boolean;
   createdAt: string;
   updatedAt: string;
+  approveStatus?: string;
 }

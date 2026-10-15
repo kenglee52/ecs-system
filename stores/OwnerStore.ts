@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { getAllOwnerThatApproved, getAllOwnerWaitingApprove , ApproveOwner, RejectOwner, getAllRejectedOwner} from "@/services/OwnerService";
+import { getAllOwnerThatApproved, getAllOwnerWaitingApprove , ApproveOwner, RejectOwner, getAllRejectedOwner, getApprovedOwerNotActive} from "@/services/OwnerService";
 import { Owner } from "@/types/owner";
 
 interface OwnerState {
@@ -8,6 +8,8 @@ interface OwnerState {
          ApproveOwner: (id: string) => Promise<void>;
          RejectOwner: (id: string) => Promise<void>;
          getAllRejectedOwner: () => Promise<void>;
+         getApprovedOwerNotActive: () => Promise<void>;
+         notActiveOwners: Owner[];
          owners: Owner[];
          approvedOwners: Owner[];
          rejectedOwners: Owner[];
@@ -21,6 +23,7 @@ export const useOwnerStore = create<OwnerState>((set) => ({
          error: null,
          approvedOwners: [],
          rejectedOwners: [],
+         notActiveOwners: [],
          getAllOwnerWaitingApprove: async () => {
                   try {
                            set({ loading: true });
@@ -72,5 +75,18 @@ export const useOwnerStore = create<OwnerState>((set) => ({
                   } catch (e:any) {
                          set({loading: false, error: e});  
                   }
+         },
+         getApprovedOwerNotActive: async() => {
+          try{
+               set({loading: true});
+               const result: Owner[] = await getApprovedOwerNotActive();
+               set({
+                    loading: false,
+                    notActiveOwners: result
+               });
+          }
+          catch(e: any){
+               set({loading: false, error: e});
+          }
          }
 }))

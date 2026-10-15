@@ -1,14 +1,14 @@
 "use client";
 import { Owner } from "@/types/owner";
-import { 
-  ArrowLeft, 
-  User, 
-  MapPin, 
-  FileText,  
-  CheckCircle2, 
-  XCircle, 
-  Phone, 
-  Mail, 
+import {
+  ArrowLeft,
+  User,
+  MapPin,
+  FileText,
+  CheckCircle2,
+  XCircle,
+  Phone,
+  Mail,
 } from "lucide-react";
 import { useOwner } from "@/hooks/useOwner";
 
@@ -21,11 +21,11 @@ interface CheckPageProps {
 }
 
 export default function CheckPage({ owner, onBack, onApprove, onReject }: CheckPageProps) {
-  const {ApproveOwner, RejectOwner} = useOwner();
+  const { ApproveOwner, RejectOwner } = useOwner();
   if (!owner) {
     return (
       <div className="max-w-7xl mx-auto space-y-6">
-        <button 
+        <button
           onClick={onBack}
           className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 transition shadow-sm"
         >
@@ -42,42 +42,48 @@ export default function CheckPage({ owner, onBack, onApprove, onReject }: CheckP
     <div className="max-w-7xl mx-auto space-y-6 pb-12">
       {/* Top Bar: Back Button & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <button 
+        <button
           onClick={onBack}
           className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 rounded-xl text-xs font-semibold text-slate-700 transition shadow-sm w-fit cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> ກັບຄືນລາຍການ
         </button>
-        {owner.isActive === false? <div className="flex items-center gap-3">
-          <button
-            onClick={async() => {
-                  onReject && onReject(owner._id);
-                  await RejectOwner(owner._id);
-                  onBack();
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
-          >
-            <XCircle className="w-4 h-4" /> ປະຕິເສດ
-          </button>
-          <button
-            onClick={async() => {
-                 onApprove && onApprove(owner._id);
-                 await ApproveOwner(owner._id);
-                 onBack();
-           }}
-            className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-600/20 cursor-pointer"
-          >
-            <CheckCircle2 className="w-4 h-4" /> ອະນຸມັດເປີດຮ້ານ
-          </button>
-        </div>: null}
+        {owner.approveStatus !== "REJECTED" ?
+          <div className="">
+            {
+              owner.isActive === false ? <div className="flex items-center gap-3">
+                <button
+                  onClick={async () => {
+                    onReject && onReject(owner._id);
+                    await RejectOwner(owner._id);
+                    onBack();
+                  }}
+                  className="flex items-center gap-2 px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-xl text-xs font-bold transition shadow-sm cursor-pointer"
+                >
+                  <XCircle className="w-4 h-4" /> ປະຕິເສດ
+                </button>
+                <button
+                  onClick={async () => {
+                    onApprove && onApprove(owner._id);
+                    await ApproveOwner(owner._id);
+                    onBack();
+                  }}
+                  className="flex items-center gap-2 px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition shadow-md shadow-emerald-600/20 cursor-pointer"
+                >
+                  <CheckCircle2 className="w-4 h-4" /> ອະນຸມັດເປີດຮ້ານ
+                </button>
+              </div> : null
+            }
+          </div> : null
+        }
       </div>
 
       {/* Main Profile Header Card */}
       <div className="bg-gradient-to-r from-sky-900 to-sky-950 p-6 sm:p-8 rounded-2xl shadow-md text-white flex flex-col md:flex-row items-center gap-6 justify-between border border-sky-800">
         <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-          <img 
-            src={owner.logo || "https://via.placeholder.com/150"} 
-            alt="Store Logo" 
+          <img
+            src={owner.logo || "https://via.placeholder.com/150"}
+            alt="Store Logo"
             className="w-24 h-24 rounded-2xl object-cover border-2 border-yellow-500/60 shadow-lg bg-white"
           />
           <div className="space-y-1">
@@ -88,22 +94,27 @@ export default function CheckPage({ owner, onBack, onApprove, onReject }: CheckP
             <p className="text-xs text-sky-200">ເລກທະບຽນ: <span className="font-mono text-white">{owner.registrationNumber}</span></p>
           </div>
         </div>
-
         <div className="flex flex-col items-center md:items-end gap-2 bg-white/10 p-4 rounded-xl border border-white/10 backdrop-blur-sm w-full md:w-auto">
           <div className="text-[11px] text-sky-300">ສະຖານະປະຈຸບັນ</div>
-          <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${owner.isActive ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}`}>
-            <span className={`w-2 h-2 rounded-full ${owner.isActive ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`}></span>
-            {owner.isActive ? 'ເປີດໃຊ້ງານແລ້ວ' : 'ລໍຖ້າການອະນຸມັດ'}
-          </div>
+          {owner.approveStatus !== "REJECTED" ?
+            <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 ${owner.isActive ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'}`}>
+              <span className={`w-2 h-2 rounded-full ${owner.isActive ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'}`}></span>
+              {owner.isActive ? 'ເປີດໃຊ້ງານແລ້ວ' : 'ລໍຖ້າການອະນຸມັດ'}
+            </div> :
+            <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 bg-red-500/20 text-red-300 border border-red-500/30`}>
+              <span className={`w-2 h-2 rounded-full bg-red-400`}></span>
+              {'ຖືກປະຕິເສດແລ້ວ'}
+            </div>
+          }
         </div>
       </div>
 
       {/* Grid Content Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+
         {/* Left Column: Owner & Store Details */}
         <div className="lg:col-span-2 space-y-6">
-          
+
           {/* Personal Information */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
             <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
@@ -203,7 +214,7 @@ export default function CheckPage({ owner, onBack, onApprove, onReject }: CheckP
 
         {/* Right Column: Images (Documents & Signature) */}
         <div className="space-y-6">
-          
+
           {/* Logo & Signature */}
           <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
             <h3 className="text-xs font-bold text-sky-950 tracking-wide uppercase border-b border-slate-100 pb-2">ລາຍເຊັນ</h3>
